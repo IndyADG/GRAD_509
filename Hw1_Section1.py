@@ -4,7 +4,6 @@ from sklearn.linear_model import LinearRegression
 X = [[10], [20], [30], [40], [50]]
 # 1D list of Revenue targets
 y = [150, 290, 440, 600, 720]
-
 # scale of units, i.e., $ in 1000s
 scale = 1000
 
