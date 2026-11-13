@@ -2,48 +2,41 @@ from PIL import Image
 import numpy as np
 image = Image.open("./ladybug.jpg")
 
-# Convert the image to an array
+# Convert image to an array, downsample every 4th pixel, then reshape to an array of RGB values
 X = np.asarray(image)
-
-# Downsample every 4th pixel
 X = X[::4, ::4]
 shp = X.shape
-print(shp)
-
-# Convert X to a long array of RGB values
 X = X.reshape(-1, 3)
 
-# Run k-means clustering
+# Run k-means clustering w/ keeping k clusters same value
 from sklearn.cluster import KMeans
-
-# Test keeping k clusters same value
 result = []
 for k in range(0,10):
     kmeans = KMeans(n_clusters=5, random_state=k).fit(X)
-    segmented_img = kmeans.cluster_centers_[kmeans.labels_]
-    #result[k] = kmeans.inertia_
-    result.append([kmeans.inertia_, segmented_img])
+    # store fitted model and its inertia score, for easy access of min & max
+    result.append([kmeans.inertia_, kmeans])
 
-# mean & spread
+# Get inertia mean & spread
 inertia_vals = np.array([entry[0] for entry in result])
-print(inertia_vals)
 inertia_mean = inertia_vals.mean()
 inertia_std = inertia_vals.std()
-print("inertia_mean", inertia_mean)
-print("inertia_std", inertia_std)
+print("inertia score mean:", inertia_mean)
+print("inertia score standard deviation: ", inertia_std)
 
-# plot best & worst inertia scores
+# Find then plot best & worst inertia scores
 from operator import itemgetter
-min_inertia_img = min(result, key=itemgetter(0))[1]
-max_inertia_img = max(result, key=itemgetter(0))[1]
+min_inertia_model = min(result, key=itemgetter(0))[1]
+max_inertia_model = max(result, key=itemgetter(0))[1]
+print("minimum inertia score: ", min_inertia_model.inertia_)
+print("maximum inertia score: ", max_inertia_model.inertia_)
 
-# Convert image back to a grid of RGB values
-img_best = min_inertia_img.reshape(shp)
-img_worst = max_inertia_img.reshape(shp)
-
-# Convert from array back to image (the RGB values must be 8-bit integers)
-image_best = (Image.fromarray(img_best.astype(np.uint8), 'RGB'))
+# For best & worst scores, convert segmented images to a grid of RGB values, then back to an image
+segmented_img_best = min_inertia_model.cluster_centers_[min_inertia_model.labels_]
+img_grid_best = segmented_img_best.reshape(shp)
+image_best = (Image.fromarray(img_grid_best.astype(np.uint8), 'RGB'))
 image_best.show()
 
-image_worst = (Image.fromarray(img_worst.astype(np.uint8), 'RGB'))
+segmented_img_worst = max_inertia_model.cluster_centers_[max_inertia_model.labels_]
+img_grid_worst = segmented_img_worst.reshape(shp)
+image_worst = (Image.fromarray(img_grid_worst.astype(np.uint8), 'RGB'))
 image_worst.show()
