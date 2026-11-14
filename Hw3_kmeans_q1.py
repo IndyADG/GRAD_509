@@ -11,8 +11,8 @@ X = X.reshape(-1, 3)
 # Run k-means clustering w/ keeping k clusters same value
 from sklearn.cluster import KMeans
 result = []
-for k in range(0,10):
-    kmeans = KMeans(n_clusters=5, random_state=k).fit(X)
+for j in range(0,10):
+    kmeans = KMeans(n_clusters=5, random_state=j).fit(X)
     # store fitted model and its inertia score, for easy access of min & max
     result.append([kmeans.inertia_, kmeans])
 
