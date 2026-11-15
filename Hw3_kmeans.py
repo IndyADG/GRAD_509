@@ -40,10 +40,9 @@ for ii in range(0,20):
 
 # Test keeping k clusters same value
 result = []
-for k in range(0,10):
-    kmeans = KMeans(n_clusters=5, random_state=k).fit(X)
+for j in range(0,10):
+    kmeans = KMeans(n_clusters=5, random_state=j).fit(X)
     segmented_img = kmeans.cluster_centers_[kmeans.labels_]
-    #result[k] = kmeans.inertia_
     result.append([kmeans.inertia_, segmented_img])
 
 # mean & spread
