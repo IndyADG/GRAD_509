@@ -12,7 +12,7 @@ X = X.reshape(-1, 3)
 # Run k-means clustering w/ keeping k clusters same value
 from sklearn.cluster import KMeans
 results = []
-max_cluster_boundary = 11
+max_cluster_boundary = 17
 k_range = range(1,max_cluster_boundary)
 
 for k in k_range:
@@ -25,10 +25,10 @@ for k in k_range:
     # Get mean, min, and max inertia scores
     k_inertia_array = np.array(k_inertia_vals)
     mean_inertia = k_inertia_array.mean()
-    #print("For k=",k, " average inertia score:", mean_inertia)
+    print(f"For k={k}, average inertia score: {mean_inertia},")
     min_inertia = min(k_inertia_array)
     max_inertia = max(k_inertia_array)
-    #print("minimum inertia score: ", min_inertia, "; maximum inertia score: ", max_inertia)
+    print(f" min inertia score: {min_inertia}, max inertia score: {max_inertia}")
     results.append((k, mean_inertia, min_inertia, max_inertia))
 
 plt.xlabel("Number of Clusters k")
