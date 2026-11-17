@@ -1,7 +1,7 @@
 # Read and display an image using Python Imaging Library
 from PIL import Image
 import numpy as np
-image = Image.open("./ladybug.jpg")
+image = Image.open("color_fun_crop.jpg")
 #image.show()
 
 # Convert the image to an array
@@ -14,7 +14,7 @@ print(shp)
 
 # Display the downscaled image
 image = (Image.fromarray(X.astype(np.uint8), 'RGB'))
-#image.show()
+image.show()
 
 # Convert X to a long array of RGB values
 X = X.reshape(-1, 3)
@@ -30,8 +30,8 @@ img_t = segmented_img.reshape(shp)
 
 # Convert from array back to image (the RGB values must be 8-bit integers)
 image = (Image.fromarray(img_t.astype(np.uint8), 'RGB'))
-#image.show()
-#print(kmeans.inertia_) #Print the k-means inertia score
+image.show()
+print(kmeans.inertia_) #Print the k-means inertia score
 
 inertia = np.zeros(20)
 for ii in range(0,20):
@@ -40,8 +40,9 @@ for ii in range(0,20):
 
 # Test keeping k clusters same value
 result = []
+k_val = 5
 for j in range(0,10):
-    kmeans = KMeans(n_clusters=5, random_state=j).fit(X)
+    kmeans = KMeans(n_clusters=k_val, random_state=j).fit(X)
     segmented_img = kmeans.cluster_centers_[kmeans.labels_]
     result.append([kmeans.inertia_, segmented_img])
 

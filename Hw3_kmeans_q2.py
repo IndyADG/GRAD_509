@@ -1,7 +1,7 @@
 from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
-image = Image.open("./ladybug.jpg")
+image = Image.open("color_fun_crop.jpg")
 
 # Convert image to an array, downsample every 4th pixel, then reshape to an array of RGB values
 X = np.asarray(image)
@@ -12,7 +12,7 @@ X = X.reshape(-1, 3)
 # Run k-means clustering w/ keeping k clusters same value
 from sklearn.cluster import KMeans
 results = []
-max_cluster_boundary = 17
+max_cluster_boundary = 21
 k_range = range(1,max_cluster_boundary)
 
 for k in k_range:
@@ -47,22 +47,3 @@ plt.margins(x=0)
 plt.legend()
 plt.show()
 
-'''###
-from sklearn.metrics import silhouette_score, davies_bouldin_score
-
-for k in range(3, 7):
-    # Fit the model using a fixed random state for baseline comparison
-    kmeans = KMeans(n_clusters=k, random_state=k-2, n_init="auto").fit(X)
-    labels = kmeans.labels_
-
-    # Calculate Davies-Bouldin (lower is better, indicating tighter/better-separated clusters)
-    db_index = davies_bouldin_score(X, labels)
-
-    # Calculate Silhouette (higher is better, approaching 1.0)
-    # A sample_size is passed because running pairwise distances on 497,664 pixels will hang the kernel
-    sil_score = silhouette_score(X, labels, sample_size=15000, random_state=k-2)
-
-    print(f"k={k}")
-    print(f"  Davies-Bouldin: {db_index:.4f}")
-    print(f"  Silhouette:     {sil_score:.4f}\n")
-'''

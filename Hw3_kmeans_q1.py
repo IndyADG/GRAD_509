@@ -1,6 +1,6 @@
 from PIL import Image
 import numpy as np
-image = Image.open("./ladybug.jpg")
+image = Image.open("color_fun_crop.jpg")
 
 # Convert image to an array, downsample every 4th pixel, then reshape to an array of RGB values
 X = np.asarray(image)
@@ -11,8 +11,9 @@ X = X.reshape(-1, 3)
 # Run k-means clustering w/ keeping k clusters same value
 from sklearn.cluster import KMeans
 result = []
+k_val = 7
 for j in range(0,10):
-    kmeans = KMeans(n_clusters=5, random_state=j).fit(X)
+    kmeans = KMeans(n_clusters=k_val, random_state=j).fit(X)
     # store fitted model and its inertia score, for easy access of min & max
     result.append([kmeans.inertia_, kmeans])
 
