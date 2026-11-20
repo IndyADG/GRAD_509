@@ -6,7 +6,6 @@ X_train, y_train = mnist.data[:60_000], mnist.target[:60_000]
 #X_test, y_test = mnist.data[60_000:], mnist.target[60_000:]
 print(X_train.shape)
 
-import PIL
 from PIL import Image
 # Plot the first image. Here we reshape the image from a 784 long vector to a 28-by-28 grid
 # Since this is quite small to look at, we scale it up to 280-by-280 by interpolating. This is only
@@ -44,4 +43,14 @@ Image.fromarray((X_rec_plt).astype('uint8').reshape((28,28))).resize((280, 280))
 # Project the data down to 2d and plot a scatterplot of the images
 import matplotlib.pyplot as plt
 plt.scatter(X_reduced[:,0], X_reduced[:,1],c=y_train.astype('int'), alpha=0.2)
+plt.show()
+
+# Use isomap to perform nonlinear dimensionality reduction
+from sklearn.manifold import Isomap
+embedding = Isomap(n_components=2)
+# Since this is slower, use a smaller dataset
+X_isomap = embedding.fit_transform(X_train[:5000])
+print(X_isomap.shape)
+
+plt.scatter(X_isomap[:,0], X_isomap[:,1],c=y_train[:5000].astype('int'),alpha=0.4)
 plt.show()
