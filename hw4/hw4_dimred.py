@@ -43,19 +43,16 @@ X_rec_plt = X_rec_plt - X_rec_plt.min()
 X_rec_plt = X_rec_plt*255 / X_rec_plt.max()
 #Image.fromarray((X_rec_plt).astype('uint8').reshape((28,28))).resize((280, 280)).show()
 
-# What is the explained variance ratio for the first several principle components?
-print(pca.explained_variance_ratio_)
-
 # Project the data down to 3d and plot a scatterplot of the images
 import matplotlib.pyplot as plt
 import plotly.express as pltx
 #plt.scatter(X_reduced[:,0], X_reduced[:,1],c=y_train.astype('int'), alpha=0.2)
 #add 3D and take sample of total dataset for visualization
-n = 4000
+n = 6000
 #plt.scatter(X_reduced[:n,0], X_reduced[:n,1], X_reduced[:n, 2],c=y_train[:n].astype('int'), alpha=0.4)
 threeD_plot = pltx.scatter_3d(x=X_reduced[:n, 0], y=X_reduced[:n, 1], z=X_reduced[:n, 2],
     color=y_train[:n].astype(str), labels={'x': 'PC 1', 'y': 'PC 2', 'z': 'PC 3', 'color': 'Digit'},
-    opacity=0.5, title='3D PCA Projection of MNIST')
+    opacity=0.5, title='3D PCA Projection of MNIST - 6K sampling')
 
 threeD_plot.show()
 
