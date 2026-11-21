@@ -22,7 +22,7 @@ X_train = X_train - mu
 #Image.fromarray((X_train[0,:]+mu).astype('uint8').reshape((28,28))).resize((280, 280)).show()
 
 from sklearn.decomposition import PCA
-# Use PCA to reduce the dimensionality from 784 to 75 (about 10%)
+# Use PCA to reduce the dimensionality from 784 to 75 (about 90% reduction)
 pca = PCA(n_components=75)
 X_reduced = pca.fit_transform(X_train)
 print(X_reduced.shape)
