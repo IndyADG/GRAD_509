@@ -27,7 +27,7 @@ pca = PCA(n_components=75)
 X_reduced = pca.fit_transform(X_train)
 print(X_reduced.shape)
 
-# What is the explained variance ratio for the first several principle components?
+# What is the explained variance ratio for the first several principal components?
 print(pca.explained_variance_ratio_)
 
 # Project the 75-d data back to 784-d space
