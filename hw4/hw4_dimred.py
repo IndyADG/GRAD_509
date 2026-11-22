@@ -44,7 +44,6 @@ X_rec_plt = X_rec_plt*255 / X_rec_plt.max()
 #Image.fromarray((X_rec_plt).astype('uint8').reshape((28,28))).resize((280, 280)).show()
 
 # Project the data down to 3d and plot a scatterplot of the images
-import matplotlib.pyplot as plt
 import plotly.express as pltx
 #plt.scatter(X_reduced[:,0], X_reduced[:,1],c=y_train.astype('int'), alpha=0.2)
 #add 3D and take sample of total dataset for visualization
@@ -59,6 +58,8 @@ threeD_plot.show()
 # Use isomap to perform nonlinear dimensionality reduction
 '''
 from sklearn.manifold import Isomap
+import matplotlib.pyplot as plt
+
 embedding = Isomap(n_components=2)
 # Since this is slower, use a smaller dataset
 X_isomap = embedding.fit_transform(X_train[:5000])

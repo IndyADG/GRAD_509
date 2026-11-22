@@ -13,7 +13,7 @@ mu = np.mean(X_train, axis=0)
 X_train = X_train - mu
 
 # Select any single image and display
-original_img = X_train[0:1]
+original_img = X_train[1:2]
 
 # Have to add the mu back before visualizing image
 X_original_plt = original_img[0, :] + mu
@@ -41,11 +41,10 @@ for k in range_of_dims:
 
     Image.fromarray(X_recovered_plt.astype('uint8').reshape((28, 28))).resize((280, 280)).show()
 
-
 plt.plot(range_of_dims, mse_vals, marker='o')
 plt.xlabel('Number of Dimensions')
 plt.ylabel('Reconstruction Error (MSE)')
-plt.title('PCA Reconstruction Error vs. Dimensions - Single Image')
+plt.title('PCA Reconstruction Error vs. Dimensions - Single Image X_train[1:2]')
 plt.gca().xaxis.set_major_locator(ticker.MultipleLocator(75))
 plt.show()
 
