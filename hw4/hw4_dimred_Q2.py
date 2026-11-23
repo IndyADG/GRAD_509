@@ -12,12 +12,15 @@ X_train, y_train = mnist.data[:60_000], mnist.target[:60_000]
 mu = np.mean(X_train, axis=0)
 X_train = X_train - mu
 
+# Visualize mean image
+Image.fromarray(mu.astype('uint8').reshape((28,28))).resize((280, 280)).show()
+
 # Select any single image and display
-original_img = X_train[1:2]
+original_img = X_train[0:1]
 
 # Have to add the mu back before visualizing image
 X_original_plt = original_img[0, :] + mu
-Image.fromarray(X_original_plt.astype('uint8').reshape((28,28))).resize((280, 280)).show()
+#Image.fromarray(X_original_plt.astype('uint8').reshape((28,28))).resize((280, 280)).show()
 
 range_of_dims = [1, 10, 25, 50, 75, 125, 175, 300, 500, 784]
 mse_vals = []
@@ -44,11 +47,11 @@ for k in range_of_dims:
 plt.plot(range_of_dims, mse_vals, marker='o')
 plt.xlabel('Number of Dimensions')
 plt.ylabel('Reconstruction Error (MSE)')
-plt.title('PCA Reconstruction Error vs. Dimensions - Single Image X_train[1:2]')
+plt.title('PCA Reconstruction Error vs. Dimensions - Single Image X_train[0:1]')
 plt.gca().xaxis.set_major_locator(ticker.MultipleLocator(75))
 plt.show()
 
-
+'''
 # Total reconstruction error of dataset vs dimension
 total_errors = []
 
@@ -66,3 +69,4 @@ plt.ylabel('Total Reconstruction Error (Sum of MSEs)')
 plt.title('PCA Reconstruction Error vs. Dimensions - Full Dataset')
 plt.gca().xaxis.set_major_locator(ticker.MultipleLocator(75))
 plt.show()
+'''
