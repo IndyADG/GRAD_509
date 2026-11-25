@@ -47,25 +47,26 @@ X_rec_plt = X_rec_plt*255 / X_rec_plt.max()
 '''
 import plotly.express as pltx
 #add 3D and take sample of total dataset for visualization
-n = 6000
+n = 5000
 threeD_plot = pltx.scatter_3d(x=X_reduced[:n, 0], y=X_reduced[:n, 1], z=X_reduced[:n, 2],
     color=y_train[:n].astype(str), labels={'x': 'PC 1', 'y': 'PC 2', 'z': 'PC 3', 'color': 'Digit'},
-    opacity=0.5, title='3D PCA Projection of MNIST - 6K sampling')
+    opacity=0.5, title='3D PCA Projection of MNIST - 5K sampling')
+threeD_plot.update_traces(marker=dict(size=4))
 threeD_plot.show()
 '''
 
 # Use isomap to perform nonlinear dimensionality reduction
 from sklearn.manifold import Isomap
-
-embedding = Isomap(n_components=3)
+radius = 4000
+embedding = Isomap(n_components=3, n_neighbors=None, radius=radius)
 # Since this is slower, use a smaller dataset
 X_isomap = embedding.fit_transform(X_train[:5000])
 print(X_isomap.shape)
 
 import plotly.express as pltx
 n = 5000
-threeD_plot = pltx.scatter_3d(x=X_isomap[:n, 0], y=X_isomap[:n, 1], z=X_isomap[:n, 2],
+threeD_iso_plot = pltx.scatter_3d(x=X_isomap[:n, 0], y=X_isomap[:n, 1], z=X_isomap[:n, 2],
     color=y_train[:n].astype(str), labels={'x': 'D 1', 'y': 'D 2', 'z': 'D 3', 'color': 'Digit'},
-    opacity=0.5, title='3D Isomap Plot of MNIST - 5K')
-threeD_plot.update_traces(marker=dict(size=3))
-threeD_plot.show()
+    opacity=0.5, title=f'3D Isomap Plot of MNIST - radius={radius}')
+threeD_iso_plot.update_traces(marker=dict(size=4))
+threeD_iso_plot.show()
