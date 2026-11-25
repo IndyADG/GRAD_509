@@ -45,18 +45,14 @@ X_rec_plt = X_rec_plt*255 / X_rec_plt.max()
 
 # Project the data down to 3d and plot a scatterplot of the images
 import plotly.express as pltx
-#plt.scatter(X_reduced[:,0], X_reduced[:,1],c=y_train.astype('int'), alpha=0.2)
 #add 3D and take sample of total dataset for visualization
 n = 6000
-#plt.scatter(X_reduced[:n,0], X_reduced[:n,1], X_reduced[:n, 2],c=y_train[:n].astype('int'), alpha=0.4)
 threeD_plot = pltx.scatter_3d(x=X_reduced[:n, 0], y=X_reduced[:n, 1], z=X_reduced[:n, 2],
     color=y_train[:n].astype(str), labels={'x': 'PC 1', 'y': 'PC 2', 'z': 'PC 3', 'color': 'Digit'},
     opacity=0.5, title='3D PCA Projection of MNIST - 6K sampling')
-
 threeD_plot.show()
 
 # Use isomap to perform nonlinear dimensionality reduction
-'''
 from sklearn.manifold import Isomap
 import matplotlib.pyplot as plt
 
@@ -67,4 +63,3 @@ print(X_isomap.shape)
 
 plt.scatter(X_isomap[:,0], X_isomap[:,1],c=y_train[:5000].astype('int'),alpha=0.4)
 plt.show()
-'''
