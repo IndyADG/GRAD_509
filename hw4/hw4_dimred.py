@@ -10,7 +10,7 @@ from PIL import Image
 # Plot the first image. Here we reshape the image from a 784 long vector to a 28-by-28 grid
 # Since this is quite small to look at, we scale it up to 280-by-280 by interpolating. This is only
 # needed for visualization
-Image.fromarray((X_train[0,:]).astype('uint8').reshape((28,28))).resize((280, 280)).show()
+#Image.fromarray((X_train[0,:]).astype('uint8').reshape((28,28))).resize((280, 280)).show()
 
 import numpy as np
 # This is the "average image". Try visualizing it
@@ -44,6 +44,7 @@ X_rec_plt = X_rec_plt*255 / X_rec_plt.max()
 #Image.fromarray((X_rec_plt).astype('uint8').reshape((28,28))).resize((280, 280)).show()
 
 # Project the data down to 3d and plot a scatterplot of the images
+'''
 import plotly.express as pltx
 #add 3D and take sample of total dataset for visualization
 n = 6000
@@ -51,15 +52,20 @@ threeD_plot = pltx.scatter_3d(x=X_reduced[:n, 0], y=X_reduced[:n, 1], z=X_reduce
     color=y_train[:n].astype(str), labels={'x': 'PC 1', 'y': 'PC 2', 'z': 'PC 3', 'color': 'Digit'},
     opacity=0.5, title='3D PCA Projection of MNIST - 6K sampling')
 threeD_plot.show()
+'''
 
 # Use isomap to perform nonlinear dimensionality reduction
 from sklearn.manifold import Isomap
-import matplotlib.pyplot as plt
 
-embedding = Isomap(n_components=2)
+embedding = Isomap(n_components=3)
 # Since this is slower, use a smaller dataset
 X_isomap = embedding.fit_transform(X_train[:5000])
 print(X_isomap.shape)
 
-plt.scatter(X_isomap[:,0], X_isomap[:,1],c=y_train[:5000].astype('int'),alpha=0.4)
-plt.show()
+import plotly.express as pltx
+n = 5000
+threeD_plot = pltx.scatter_3d(x=X_isomap[:n, 0], y=X_isomap[:n, 1], z=X_isomap[:n, 2],
+    color=y_train[:n].astype(str), labels={'x': 'D 1', 'y': 'D 2', 'z': 'D 3', 'color': 'Digit'},
+    opacity=0.5, title='3D Isomap Plot of MNIST - 5K')
+threeD_plot.update_traces(marker=dict(size=3))
+threeD_plot.show()
